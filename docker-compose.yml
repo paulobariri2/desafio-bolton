@@ -32,7 +32,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-            - data:/var/lib/mysql
+            - db_data:/var/lib/mysql
+            - ./mysql/initial_data/:/docker-entrypoint-initdb.d
     networks:
       - backend
     environment:
@@ -45,4 +46,4 @@ networks:
   frontend:
   backend:
 volumes:
-    data:
+    db_data:
