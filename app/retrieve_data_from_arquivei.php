@@ -1,4 +1,6 @@
 <?php
+include_once dirname(".") . "/database/database.php";
+include_once dirname(".") . "/objects/nfe.php";
 
 function findTotal($element)
 {
@@ -21,7 +23,7 @@ function findTotal($element)
 	return null;
 }
 
-function populateDataBase() 
+function retrieveDataFromArquivei() 
 {
 	$curl = curl_init();
 
@@ -32,45 +34,12 @@ function populateDataBase()
 
 	$response = curl_exec($curl);
 	$response = json_decode($response);
+	$data = $response->data;
 
-	$data =  $response->data;
-	foreach ($data as $nfe)
-	{
-		$xml = "";
-		for ($i=0; $i < ceil(strlen($nfe->xml)/256); $i++)
-			$xml = $xml . base64_decode(substr($nfe->xml, $i*256, 256));
-		$xml = new SimpleXMLElement($xml);
-		$total = findTotal($xml);
-		insertIntoDB($nfe->access_key, $total->ICMSTot->vNF);
-	}
 	curl_close($curl);
-}
-
-function insertIntoDB($access_key, $value)
-{
-	$servername = "mysql";
-	$username = "user";
-	$password = "password";
-	$dbname = "dbbolton";
-
-	$conn = new mysqli($servername, $username, $password, $dbname);
-	if ($conn->connect_error)
-	{
-		die("Connection falied: " . $conn->connect_error);
-	}
 	
-	$sql = "INSERT INTO nfevalue (access_key, value) VALUES ('" . $access_key . "','" . $value . "')";
+	return  $data;
 	
-	if ($conn->query($sql) === TRUE) 
-	{
-		echo " -> " . $access_key . " - " . $value . "<br>";
-	}
-	else
-	{
-		echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
-	}
-
-	$conn->close();   
 }
 
 ?>
