@@ -22,7 +22,6 @@ class Database
 	public function insert(Entity $entity)
 	{
 		$sql = $entity->insertSql();
-		echo "<p>insert " . $sql . "</p>";	
 		if ($this->conn->query($sql) === FALSE) 
 		{
 			echo "Error: " . $sql . "<br>" . $this->conn->error . "<br>";

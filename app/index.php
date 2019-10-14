@@ -21,9 +21,8 @@ foreach ($data as $nfe)
 	$nfeObj = new Nfe();
 	$nfeObj->accessKey = $nfe->access_key; 
 	$nfeObj->value = $total->ICMSTot->vNF;
-	echo "<p> data " . $total->ICMSTot->vNF . "</p>";  
 	$db->insert($nfeObj);
 }
 $db->closeConnection();
-
+echo "<p>Dados das notas fiscais recuperados e inseridos no banco de dados.</p><br>";
 ?>
