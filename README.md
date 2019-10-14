@@ -12,6 +12,21 @@ Para utilizar este projeto, deve-se subir os servidores de cada container utiliz
 docker-compose up
 ```
 
+As variáveis de ambiente a seguir são utilizadas no docker e devem ser criadas. Caso deseje versões diferentes, substituir por valores apropriados.
+
+```
+PHP_VERSION=5.6
+MYSQL_VERSION=5.7
+APACHE_VERSION=2.4.32
+
+DB_ROOT_PASSWORD=rootpassword
+DB_NAME=dbbolton
+DB_USERNAME=user
+DB_PASSWORD=password
+
+PROJECT_ROOT=./app
+```
+
 ### Salvando os dados das Notas Fiscais no banco de dados
 Para obter os dados das notas fiscais e salvá-los no banco de dados basta fazer uma chamada REST para o host da máquina executando os servidores. O arquivo 'index.php' vai realizar uma chamada para a API disponibilizada pela Arquivei, obter o valor da nota fiscal e salvá-lo no banco de dados junto com a chave de acesso da respectiva nota, na tabela 'nfevalue'.
 
